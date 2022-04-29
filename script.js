@@ -4,7 +4,12 @@
     var _a;
     const $ = (query) => document.querySelector(query);
     function patio() {
-        function ler() { }
+        function ler() {
+            return localStorage.patio ? JSON.parse(localStorage.patio) : [];
+        }
+        function salvar(veiculo) {
+            localStorage.setItem("patio", JSON.stringify(veiculo));
+        }
         function adicionar(veiculo) {
             var _a;
             const row = document.createElement('tr');
@@ -18,9 +23,15 @@
     `;
             (_a = $('#patio')) === null || _a === void 0 ? void 0 : _a.appendChild(row);
         }
-        function salvar() { }
         function remover() { }
-        function render() { }
+        function render() {
+            $("#patio").innerHTML = "";
+            const patio = ler();
+            if (patio.length) {
+                patio.forEach((veiculo) => adicionar(veiculo));
+            }
+        }
+        patio().render;
         return { ler, adicionar, salvar, remover, render };
     }
     (_a = $('#cadastrar')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {

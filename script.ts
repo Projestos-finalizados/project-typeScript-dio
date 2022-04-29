@@ -8,9 +8,14 @@ interface Veiculo {
 const $ = (query: string): HTMLInputElement | null => document.querySelector(query);
 function patio(){
 
-function ler(){}
+function ler(): Veiculo[]{
+    return localStorage.patio ? JSON.parse(localStorage.patio) : []
+}
+function salvar(veiculo: Veiculo[]){
+localStorage.setItem("patio", JSON.stringify(veiculo));
+}
 
-function adicionar(veiculo: Veiculo){
+function adicionar(veiculo: Veiculo): void{
  const row = document.createElement('tr');
  row.innerHTML = `
     <td>${veiculo.nome}</td>
@@ -23,12 +28,17 @@ function adicionar(veiculo: Veiculo){
     $('#patio')?.appendChild(row);
  
 }
-function salvar(){}
 
 function remover(){}
 
-function render(){}
-
+function render(){
+    $("#patio")!.innerHTML = "";
+    const patio =ler();
+    if (patio.length) {
+        patio.forEach((veiculo) => adicionar(veiculo));
+    }
+}
+    patio().render;
 return{ ler, adicionar, salvar, remover, render}
 
 }
